@@ -30,17 +30,17 @@ CINEMÁTICA INVERSA:
 
 Para a parte da cinemática inversa um caso particular foi implementado, onde:
 
--170<=q1<=170
+-170 <= q1 <= 170
 
-0<q2<=50
+0 < q2 <=50
 
-0<q3<=94
+0 < q3 <= 94
 
-0<q4<=175
+0 < q4 <= 175
 
-0<q5<=120
+0 < q5 <= 120
 
-0<q6<=180
+0 < q6 <= 180
 
 Essas limitações decorrem da análise feita geometricamente para um conjunto limitado de posturas do manipulador.
 
@@ -77,7 +77,7 @@ La sintaxis que crea el robot con las seis juntas rotacionales especificadas es:
 
 CINEMÁTICA DIRECTA:
 
-Al ejecutar el programa se le pide al usuario que introduzca valores que contemplan el intervalo especificado. Así, las ecuaciones de cinemática directa se crean. Con los ángulos de las juntas insertadas, la función _robo.teach (Q) _ - donde Q es un vector con los ángulos insertados por el usuario - crea una ventana de visualización y permite la manipulación del robot.
+Al ejecutar el programa se le pide al usuario que introduzca valores que contemplan el intervalo especificado. Así, las ecuaciones de cinemática directa se crean. Con los ángulos de las juntas insertadas, la función _robo.teach (Q)_ - donde Q es un vector con los ángulos insertados por el usuario - crea una ventana de visualización y permite la manipulación del robot.
 
 CINEMÁTICA INVERSA:
 
@@ -85,15 +85,15 @@ Para la parte de la cinemática inversa un caso particular fue implementado, don
 
 -170 <= q1 <= 170
 
-0 <q2 <50 =
+0 < q2 <=50
 
-0 <q3 <= 94
+0 < q3 <= 94
 
-0 <q4 <= 175
+0 < q4 <= 175
 
-0 <q5 <= 120
+0 < q5 <= 120
 
-0 <q6 <= 180
+0 < q6 <= 180
 
 Estas limitaciones se derivan del análisis realizado geométricamente para un conjunto limitado de posturas del manipulador.
 
