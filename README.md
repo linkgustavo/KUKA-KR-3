@@ -2,10 +2,15 @@
 Modelo e simulação Robô KUKA KR 3 R540 / Modelo y simulación Robot KUKA KR 3 R540
 
 Universidade Federal de Santa Catarina
+
 Engenharia de Controle e Automação
+
 Trabalho 1 - Modelo e simulação Robo KUKA KR 3 R540
+
 Professor: Marcelo Roberto Petry
+
 Alunos: Christian Correa de Borba      <christian962000@hotmail.com>
+
         Gustavo Abiel Link             <gustavo_abiel@hotmail.com>
 
 Blumenau, 28 de maio de 2018.
