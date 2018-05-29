@@ -1,6 +1,6 @@
-%%%%%%%%%BLU3704-07754 (20181) - Introdu??o a Robatica Industrial%%%%%%%%%
+%%%%%%%%%BLU3704-07754 (20181) - IntroduÁ„o a Robatica Industrial%%%%%%%%%
 %Universidade Federal de Santa Catarina
-%Engenharia de Controle e Automa??o
+%Engenharia de Controle e AutomaÁ„o
 %Trabalho 1 - Modelo e simulacao Robo KUKA KR 3 R540
 %Professor: Marcelo Roberto Petry
 %Alunos: Christian Correa de Borba      <christian962000@hotmail.com>
@@ -24,22 +24,22 @@ robo = SerialLink(L, 'name', 'KR 3 R540', 'manufacturer', 'KUKA'); %Cria o robo 
 
 %% Q.1 - Cinematica direta
 %Entrada do usuario, usada para determinar a posicao final do manipulador
-q1 = deg2rad(input ('Fornecer o angulo da junta 1 ([-170,170] graus): ')); % +-170
-q2 = deg2rad(input ('Fornecer o angulo da junta 2 ([0, 50] graus): ')); % 0 - 50
-q3 = deg2rad(input ('Fornecer o angulo da junta 3 ([0, 94] graus): ')); %% 0 - 94
-q4 = deg2rad(input ('Fornecer o angulo da junta 4 ((0, 175] graus): ')); % 175 !0
-q5 = deg2rad(input ('Fornecer o angulo da junta 5 ((0, 120] graus): ')); % 120 !0
-q6 = deg2rad(input ('Fornecer o angulo da junta 6  ((0, 180] graus): ')); % <180 !0
+Q1 = deg2rad(input ('Fornecer o angulo da junta 1 ([-170,170] graus): ')); % +-170
+Q2 = deg2rad(input ('Fornecer o angulo da junta 2 ([0, 50] graus): ')); % 0 - 50
+Q3 = deg2rad(input ('Fornecer o angulo da junta 3 ([0, 94] graus): ')); %% 0 - 94
+Q4 = deg2rad(input ('Fornecer o angulo da junta 4 ([-175, 175] graus): ')); % 175 !0
+Q5 = deg2rad(input ('Fornecer o angulo da junta 5 ([-120, 120] graus): ')); % 120 !0
+Q6 = deg2rad(input ('Fornecer o angulo da junta 6  ([0, 180] graus): ')); % <180 !0
 
 
-T1 = L(1).A(q1).T;  T1(1,2) = 0;    T1(2,2) = 0;    T1(3,3) = 0;
-T2 = L(2).A(q2).T;
-T3 = L(3).A(q3).T;  T3(1,2) = 0;    T3(2,2) = 0;    T3(3,3) = 0;
-T4 = L(4).A(q4).T;  T4(1,2) = 0;    T4(2,2) = 0;    T4(3,3) = 0;
-T5 = L(5).A(q5).T;  T5(1,2) = 0;    T5(2,2) = 0;    T5(3,3) = 0;
-T6 = L(6).A(q6).T;
+T1 = L(1).A(Q1).T;  T1(1,2) = 0;    T1(2,2) = 0;    T1(3,3) = 0;
+T2 = L(2).A(Q2).T;
+T3 = L(3).A(Q3).T;  T3(1,2) = 0;    T3(2,2) = 0;    T3(3,3) = 0;
+T4 = L(4).A(Q4).T;  T4(1,2) = 0;    T4(2,2) = 0;    T4(3,3) = 0;
+T5 = L(5).A(Q5).T;  T5(1,2) = 0;    T5(2,2) = 0;    T5(3,3) = 0;
+T6 = L(6).A(Q6).T;
 
-Q = [q1 q2 q3 q4 q5 q6]; %Condicao inicial do robo, posicao de masterizacao
+Q = [Q1 Q2 Q3 Q4 Q5 Q6]; %Condicao inicial do robo, posicao de masterizacao
 M = T1*T2*T3*T4*T5*T6; %Matriz cinematica direta
 
 clc
@@ -99,47 +99,107 @@ q4 = atan2(T36(2,3),T36(1,3));
 q5 = atan2(sqrt(T36(1,3)^2+T36(2,3)^2),T36(3,3));
 q6 = atan2(T36(3,2),-T36(3,1));
 
+q14 = atan2(-T36(2,3),-T36(1,3));
+q15 = atan2(-sqrt(T36(1,3)^2+T36(2,3)^2),T36(3,3));
+q16 = atan2(-T36(3,2),T36(3,1));
 
-Q = [rad2deg(q1); rad2deg(q2); rad2deg(q3); rad2deg(q4); rad2deg(q5); rad2deg(q6)];
 
-%% Tratamento de erro
+Q2 = [rad2deg(q1); rad2deg(q2); rad2deg(q3); rad2deg(q4); rad2deg(q5); rad2deg(q6)];
+Q1=[rad2deg(q14);rad2deg(q15);rad2deg(q16)];
+
+%% Tratamento de erro para theta 5 entre 0 e pi 
+J=zeros(1,6);
 error = 0;
-if q1 < -170*pi/180 || q1> 170*pi/180
-    disp('Nao eh possivel alcancar este ponto')
-    error = 1;
+disp(' Resposta da cinematica inversa se o theta5 estiver entre 0 e pi ')
+if Q2(1,1) <= -171 || Q2(1,1)>= 171
+   J(1)=1;
+   error = 1;
 end
 
-if q2 < -170*pi/180 || q2> 50*pi/180
-    disp('Nao eh possivel alcancar este ponto')
-    error = 1;
+if Q2(2,1) <= -171 || Q2(2,1)> 51
+   J(2)=1;
+   error = 1;
 end
 
-if q3 < -110*pi/180 || q3> 155*pi/180
-    disp('Nao eh possivel alcancar este ponto')
+if Q2(3,1) < -110 || Q2(3,1)> 155
     error = 1;
+    J(3)=1;
 end
 
-if q4 < -175*pi/180 || q4> 175*pi/180
-    disp('Nao eh possivel alcancar este ponto')
+if Q2(4,1) < -175 || Q2(4,1)> 175
     error = 1;
+    J(4)=1;
 end
 
-if q5 < -120*pi/180 || q5> 120*pi/180
-    disp('Nao eh possivel alcancar este ponto')
+if Q2(5,1) < -120 || Q2(5,1)> 120
     error = 1;
+    J(5)=1;
 end
 
-if q6 < -350*pi/180 || q6> 350*pi/180
-    disp('Nao eh possivel alcancar este ponto')
+if Q2(6,1) < -350 || Q2(6,1)> 350
     error = 1;
+    J(6)=1;
 end
 
+if error == 1 
+    disp('Nao eh possivel alcancar este ponto')
+    disp('Vetor de erro da junta:') %% se for aparecer um no Vetor h· erro J=[J1 J2 J3 J4 J5 J6]
+    disp(J);
+end
+   
+    
 if error ~= 1
     disp('Os angulos das juntas sao:')
-    disp(Q)
+    disp(Q2)
+  end
+
+%% Tratamento de erro para theta 5 entre 0 e -pi 
+J=zeros(1,6);
+error = 0;
+Q2(4:6,1)=Q1;
+disp(' Resposta da cinematica inversa se o theta5 estiver entre -pi e 0 ')
+if Q2(1,1) <= -171 || Q2(1,1)>= 171
+   J(1)=1;
+   error = 1;
 end
 
+if Q2(2,1) <= -171 || Q2(2,1)> 51
+   J(2)=1;
+   error = 1;
+end
 
+if Q2(3,1) < -110 || Q2(3,1)> 155
+    error = 1;
+    J(3)=1;
+end
+
+if Q2(4,1) < -175 || Q2(4,1)> 175
+    error = 1;
+    J(4)=1;
+end
+
+if Q2(5,1) < -120 || Q2(5,1)> 120
+    error = 1;
+    J(5)=1;
+end
+
+if Q2(6,1) < -350 || Q2(6,1)> 350
+    error = 1;
+    J(6)=1;
+end
+
+if error == 1 
+    disp('Nao eh possivel alcancar este ponto')
+    disp('Vetor de erro da junta:') %% se for aparecer um no Vetor h· erro J=[J1 J2 J3 J4 J5 J6]
+    disp(J);
+    
+end
+   
+    
+if error ~= 1
+    disp('Os angulos das juntas sao:')
+    disp(Q2)
+end
 
 
 
