@@ -36,9 +36,9 @@ Para a parte da cinemática inversa um caso particular foi implementado, onde:
 
 0 < q3 <= 94
 
-0 < q4 <= 175
+-175 < q4 <= 175
 
-0 < q5 <= 120
+-120 < q5 <= 120
 
 0 < q6 <= 180
 
@@ -89,9 +89,9 @@ Para la parte de la cinemática inversa un caso particular fue implementado, don
 
 0 < q3 <= 94
 
-0 < q4 <= 175
+-175 < q4 <= 175
 
-0 < q5 <= 120
+-120 < q5 <= 120
 
 0 < q6 <= 180
 
